@@ -1,5 +1,6 @@
 import http from 'http'
 import express from 'express'
+import cors from 'cors'
 import {ApolloServer} from 'apollo-server-express'
 import {ApolloServerPluginDrainHttpServer} from 'apollo-server-core'
 import {userResolver, carResolver} from './resolvers/index.js'
@@ -32,5 +33,6 @@ async function startApolloServer(typeDefs, resolvers, context) {
 		console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`);
 	});
 	server.applyMiddleware({app});
+	app.use(cors())
 	await new Promise(() => httpServer.listen(3000));
 }
