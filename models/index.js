@@ -1,4 +1,4 @@
-export const users = [{
+export let users = [{
 	id: 1,
 	name: 'Daniel',
 	cars: [1, 2]
@@ -12,7 +12,7 @@ export const users = [{
 	cars: [3]
 }];
 
-export const cars = [{
+export let cars = [{
 	id: 1,
 	make: 'Ford',
 	model: "Focus",
