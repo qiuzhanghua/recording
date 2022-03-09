@@ -16,6 +16,6 @@ export default gql`
    make: String!
    model: String!
    color: String!
-   owner: User!
+   owner: User
  }
 `;

@@ -4,17 +4,27 @@ import {ApolloServer} from 'apollo-server-express'
 import {ApolloServerPluginDrainHttpServer} from 'apollo-server-core'
 import {userResolver, carResolver} from './resolvers/index.js'
 import {defaultTypes, userTypes, carTypes} from './typeDefs/index.js'
+import {users, cars} from "./models/index.js";
+
+let me = users[0]
 
 startApolloServer([defaultTypes, userTypes, carTypes],
-	[userResolver, carResolver]).then(() => {
+	[userResolver, carResolver],
+	{
+		users,
+		cars,
+		me
+	}
+).then(() => {
 })
 
-async function startApolloServer(typeDefs, resolvers) {
+async function startApolloServer(typeDefs, resolvers, context) {
 	const app = express();
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		typeDefs,
 		resolvers,
+		context,
 		plugins: [ApolloServerPluginDrainHttpServer({httpServer})],
 	});
 

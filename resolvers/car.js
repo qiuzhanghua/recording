@@ -1,17 +1,15 @@
-import {cars, users} from "../models/index.js";
-
 export default {
 	Query: {
-		cars: () => {
+		cars: (parent, args, {cars}) => {
 			return cars;
 		},
-		car: (parent, {id}) => {
+		car: (parent, {id}, {cars}) => {
 			const car = cars.filter(c => c.id === id);
 			return car[0];
 		},
 	},
 	Mutation: {
-		createCar: (parent, {id, make, model, color}) => {
+		createCar: (parent, {id, make, model, color}, {cars}) => {
 			let car = {
 				id,
 				make,
@@ -21,7 +19,7 @@ export default {
 			cars.push(car);
 			return car;
 		},
-		removeCar: (parent, {id}) => {
+		removeCar: (parent, {id}, {cars}) => {
 			let index = cars.findIndex(car => car.id === id);
 			if (index >= 0) {
 				cars.splice(index, 1);
@@ -31,7 +29,7 @@ export default {
 		}
 	},
 	Car: {
-		owner: (parent) => {
+		owner: (parent, _, {users}) => {
 			return users[parent.ownedBy - 1]
 		}
 	},
